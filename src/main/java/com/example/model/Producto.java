@@ -14,6 +14,8 @@ public class Producto {
     private Date fechaCreacion;
     private Date fechaModificacion;
 
+    public Producto() {}
+
     public Long getId() {
         return id;
     }
