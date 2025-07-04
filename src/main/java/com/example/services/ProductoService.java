@@ -1,6 +1,6 @@
-package com.example.service;
+package com.example.services;
 
-import com.example.model.Producto;
+import com.example.models.Producto;
 
 import java.util.List;
 
@@ -10,6 +10,6 @@ public interface ProductoService {
     List<Producto> getAll();
     Producto create(Producto producto);
     Producto update(Producto producto);
-    void delete(Producto producto);
+    void delete(Long id);
 
 }
