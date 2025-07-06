@@ -1,5 +1,7 @@
 package com.example.services.implementations;
 
+import com.example.dto.ProductoDTO;
+import com.example.dto.ProductoMapper;
 import com.example.models.Producto;
 import com.example.repositories.ProductoRepository;
 import com.example.services.ProductoService;
@@ -17,28 +19,36 @@ public class ProductoServiceImpl implements ProductoService {
     ProductoRepository productoRepository;
 
     @Override
-    public Producto get(Long id) {
+    public ProductoDTO get(Long id) {
         return productoRepository.findById(id)
+                .map(ProductoMapper::toDTO)
                 .orElseThrow(() -> new NoSuchElementException("No existe el producto con id " + id));
     }
 
     @Override
-    public List<Producto> getAll() {
-        return productoRepository.findAll();
+    public List<ProductoDTO> getAll() {
+        return productoRepository.findAll().stream()
+                .map(ProductoMapper::toDTO)
+                .toList();
     }
 
     @Override
-    public Producto create(Producto producto) {
+    public ProductoDTO create(ProductoDTO productoDTO) {
+
+        Producto producto = ProductoMapper.toModel(productoDTO);
 
         producto.setFechaCreacion(Calendar.getInstance().getTime());
         producto.setFechaModificacion(null);
 
         return productoRepository.save(producto)
+                .map(ProductoMapper::toDTO)
                 .orElseThrow(() -> new NoSuchElementException("No se pudo crear el producto"));
     }
 
     @Override
-    public Producto update(Producto producto) {
+    public ProductoDTO update(ProductoDTO productoDTO) {
+
+        Producto producto = ProductoMapper.toModel(productoDTO);
 
         Optional<Producto> productoExistente = productoRepository.findById(producto.getId());
 
@@ -50,6 +60,7 @@ public class ProductoServiceImpl implements ProductoService {
         producto.setFechaCreacion(productoExistente.get().getFechaCreacion());
 
         return productoRepository.update(producto)
+                .map(ProductoMapper::toDTO)
                 .orElseThrow(() -> new NoSuchElementException("No se pudo actualizar el producto"));
     }
 

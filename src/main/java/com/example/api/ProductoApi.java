@@ -1,6 +1,6 @@
 package com.example.api;
 
-import com.example.models.Producto;
+import com.example.dto.ProductoDTO;
 import com.example.services.ProductoService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -22,21 +22,21 @@ public class ProductoApi {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/{id}")
-    public Producto getProducto(@PathParam("id") Long id){
+    public ProductoDTO getProducto(@PathParam("id") Long id){
         return productoService.get(id);
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Producto create(Producto producto) {
+    public ProductoDTO create(ProductoDTO producto) {
         return productoService.create(producto);
     }
 
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Producto update(Producto producto) {
+    public ProductoDTO update(ProductoDTO producto) {
         return productoService.update(producto);
     }
 
