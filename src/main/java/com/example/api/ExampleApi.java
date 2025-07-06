@@ -1,4 +1,4 @@
-package com.example;
+package com.example.api;
 
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -6,7 +6,7 @@ import jakarta.ws.rs.core.MediaType;
 import java.util.Optional;
 
 @Path("/hello")
-public class ExampleResource {
+public class ExampleApi {
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)

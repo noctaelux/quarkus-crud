@@ -1,4 +1,4 @@
-package com.example;
+package com.example.api;
 
 import com.example.models.Producto;
 import com.example.services.ProductoService;
@@ -8,7 +8,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 @Path("/producto")
-public class ProductoResource {
+public class ProductoApi {
 
     @Inject
     ProductoService productoService;

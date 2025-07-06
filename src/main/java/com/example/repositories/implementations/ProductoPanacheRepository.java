@@ -1,6 +1,7 @@
-package com.example.repositories;
+package com.example.repositories.implementations;
 
 import com.example.models.Producto;
+import com.example.repositories.ProductoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
