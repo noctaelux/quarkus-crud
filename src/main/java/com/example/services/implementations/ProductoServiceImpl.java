@@ -18,12 +18,13 @@ public class ProductoServiceImpl implements ProductoService {
 
     @Override
     public Producto get(Long id) {
-        return productoRepository.findById(id);
+        return productoRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("No existe el producto con id " + id));
     }
 
     @Override
     public List<Producto> getAll() {
-        return productoRepository.listAll();
+        return productoRepository.findAll();
     }
 
     @Override
@@ -32,34 +33,30 @@ public class ProductoServiceImpl implements ProductoService {
         producto.setFechaCreacion(Calendar.getInstance().getTime());
         producto.setFechaModificacion(null);
 
-        productoRepository.persist(producto);
-        return producto;
+        return productoRepository.save(producto)
+                .orElseThrow(() -> new NoSuchElementException("No se pudo crear el producto"));
     }
 
     @Override
     public Producto update(Producto producto) {
 
-        if (productoRepository.findById(producto.getId()) == null) {
+        Optional<Producto> productoExistente = productoRepository.findById(producto.getId());
+
+        if (productoExistente.isEmpty()) {
             throw new NoSuchElementException("No existe el producto con id " + producto.getId());
         }
 
-        Producto productoExistente = productoRepository.findById(producto.getId());
+        producto.setFechaModificacion(Calendar.getInstance().getTime());
+        producto.setFechaCreacion(productoExistente.get().getFechaCreacion());
 
-        productoExistente.setNombre(producto.getNombre());
-        productoExistente.setDescripcion(producto.getDescripcion());
-        productoExistente.setSku(producto.getSku());
-        productoExistente.setPrecio(producto.getPrecio());
-        productoExistente.setExistencia(producto.getExistencia());
-        productoExistente.setFechaModificacion(Calendar.getInstance().getTime());
-
-        productoRepository.persist(productoExistente);
-        return productoExistente;
+        return productoRepository.update(producto)
+                .orElseThrow(() -> new NoSuchElementException("No se pudo actualizar el producto"));
     }
 
     @Override
     public void delete(Long id) {
 
-        Optional<Producto> productoExistente = Optional.ofNullable(productoRepository.findById(id));
+        Optional<Producto> productoExistente = productoRepository.findById(id);
 
         if (productoExistente.isEmpty()) {
             throw new NoSuchElementException("No existe el producto con id " + id);
