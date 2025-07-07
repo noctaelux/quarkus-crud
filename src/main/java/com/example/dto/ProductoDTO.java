@@ -5,13 +5,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class ProductoDTO {
+public class ProductoDTO implements Serializable {
 
     private Long id;
     private String nombre;
