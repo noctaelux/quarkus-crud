@@ -20,15 +20,15 @@ public class ReactiveAPI {
     @GET
     @Produces(MediaType.SERVER_SENT_EVENTS)
     @RestStreamElementType(MediaType.TEXT_PLAIN)
-    @Path("/backpressure/{count}/{message}")
-    public Multi<String> stream(@PathParam("count") long count,@PathParam("message") String message) {
+    @Path("/backpressure/{interval}/{message}")
+    public Multi<String> stream(@PathParam("interval") long interval,@PathParam("message") String message) {
 
-        LOG.debug("Serving a request every {} nanoseconds.",count);
+        LOG.debug("Serving a request every {} nanoseconds.",interval);
 
         return Multi
                 .createFrom()
                 .ticks()
-                .every(Duration.ofNanos(count))
+                .every(Duration.ofNanos(interval))
                 .onOverflow()
                 .buffer(1000)
                 .onItem()

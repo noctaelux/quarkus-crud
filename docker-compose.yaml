@@ -1,0 +1,17 @@
+services:
+  spring-crud-jvm:
+    image: noctaelux/spring-crud-jvm
+    ports:
+      - 8080:8080
+  spring-crud-native:
+    image: noctaelux/spring-crud-native
+    ports:
+      - 8081:8080
+  quarkus-crud-jvm:
+    image: noctaelux/quarkus-crud-jvm
+    ports:
+      - 8082:8080
+  quarkus-crud-native-micro:
+    image: noctaelux/quarkus-crud-native-micro
+    ports:
+      - 8083:8080
